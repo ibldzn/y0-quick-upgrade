@@ -1,8 +1,10 @@
-name: "Build and Release"
+name: 'Build and Release'
 
-on: 
+on:
   push:
     branches: [main]
+    paths:
+      - 'y0-quick-upgrade/**'
 
 env:
   SOLUTION_FILE_PATH: .
@@ -11,35 +13,34 @@ env:
 
 jobs:
   build-release:
-    name: "Build and Release"
+    name: 'Build and Release'
     runs-on: windows-latest
 
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v2
-      with:
-        submodules: 'recursive'
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Build
-      working-directory: ${{ env.GITHUB_WORKSPACE }}
-      run: msbuild /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform=${{ env.TARGET_PLATFORM }} ${{ env.SOLUTION_FILE_PATH }}
-            
-    - name: Set Release Tag as Environment Variable
-      run: echo "RELEASE_TAG=$(git.exe rev-parse --short HEAD)" >> $env:GITHUB_ENV
-      
-    - name: Set Current Date as Environment Variable
-      run: echo "CUR_DATE=$(date +'%Y%m%d%H%M%S')" >> $env:GITHUB_ENV
-      
-    - name: Release
-      uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "${{ env.RELEASE_TAG }}"
-        prerelease: false
-        title: "${{ env.CUR_DATE }}"
-        files: | 
-          bin/x64/Release/y0-quick-upgrade.asi
-    
+      - name: Build
+        working-directory: ${{ env.GITHUB_WORKSPACE }}
+        run: msbuild /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform=${{ env.TARGET_PLATFORM }} ${{ env.SOLUTION_FILE_PATH }}
+
+      - name: Set Release Tag as Environment Variable
+        run: echo "RELEASE_TAG=$(git.exe rev-parse --short HEAD)" >> $env:GITHUB_ENV
+
+      - name: Set Current Date as Environment Variable
+        run: echo "CUR_DATE=$(date +'%Y%m%d%H%M%S')" >> $env:GITHUB_ENV
+
+      - name: Release
+        uses: 'marvinpinto/action-automatic-releases@latest'
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: '${{ env.RELEASE_TAG }}'
+          prerelease: false
+          title: '${{ env.CUR_DATE }}'
+          files: |
+            bin/x64/Release/y0-quick-upgrade.asi
