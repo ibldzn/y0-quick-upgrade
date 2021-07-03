@@ -63,7 +63,7 @@ int64_t __fastcall hooks::on_ability_unlock::hook_func(int64_t a1)
     for (int32_t i = 0; i < 50; ++i) /// Loop through all nodes
     {
         *reinterpret_cast<int32_t*>(a1 + 0x1B4) = i;
-        auto res = o_on_ability_unlock(a1);
+        int64_t res = o_on_ability_unlock(a1);
 
         if (i == node) /// If it's the node we actually choose in the upgrade menu
             to_ret = res;
