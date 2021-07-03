@@ -33,7 +33,7 @@ jobs:
         run: echo "RELEASE_TAG=$(git.exe rev-parse --short HEAD)" >> $env:GITHUB_ENV
 
       - name: Set Current Date as Environment Variable
-        run: echo "CUR_DATE=$(date +'%Y%m%d%H%M%S')" >> $env:GITHUB_ENV
+        run: echo "CUR_DATE=$(date +'%d-%H.%M.%S')" >> $env:GITHUB_ENV
 
       - name: Release
         uses: 'marvinpinto/action-automatic-releases@latest'
@@ -41,6 +41,6 @@ jobs:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
           automatic_release_tag: '${{ env.RELEASE_TAG }}'
           prerelease: false
-          title: '${{ env.CUR_DATE }}'
+          title: 'Release ${{ env.CUR_DATE }}'
           files: |
             bin/x64/Release/y0-quick-upgrade.asi
