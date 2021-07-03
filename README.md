@@ -39,6 +39,6 @@ In other words, upgrading one node == increasing one level of your legend style.
 
 <h3>
   <p align="center">
-    <i>Create an issue or contact me on discord サメ#1649 if you found issues or have questions</i>
+    <i>Create an issue or contact me on discord ibldzn#1649 if you have questions</i>
   </p>
 </h3>
